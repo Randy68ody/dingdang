@@ -20,6 +20,7 @@ Route::post('api/:version/search','api/:version.Food/searchFood');
 /* 食材 */
 Route::post('api/:version/get_all_mates','api/:version.FoodMate/getFoodMate');
 Route::post('api/:version/get_mates_by_CID','api/:version.Category/getMateByCateID');
+Route::get('api/:version/get_FM_detail/:id','api/:version.FoodMate/getFoodMateDetail'); //食材详情
 
 /* ------------------------------------------------------------------- */
 Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');

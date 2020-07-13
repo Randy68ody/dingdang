@@ -2,8 +2,11 @@
 namespace app\api\controller\v1;
 
 use app\api\model\Category as CategoryModel;
+use app\api\model\Food as FoodModel;
 use app\api\model\FoodMaterials;
+use app\api\validate\IdMbpi;
 use app\api\validate\PageIdMbpi;
+use app\lib\exception\FoodException;
 
 class FoodMate{
 
@@ -34,5 +37,13 @@ class FoodMate{
         $recom = FoodMaterials::getmates(self::DAILYSPECIAL_LIMIT);
 
         return $recom;
+    }
+
+    /* 食材详情 2020.7.13 */
+    public function getFoodMateDetail($id){
+        (new IdMbpi())->goCheck();
+        $food = FoodMaterials::getFoodMateDetail($id);
+        if(!$food) throw new FoodException();
+        return $food;
     }
 }
