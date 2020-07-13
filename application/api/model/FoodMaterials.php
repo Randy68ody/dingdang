@@ -40,9 +40,9 @@ class FoodMaterials extends BaseModel {
     }
 
     public static function getFoodMateDetail($id){
-        $foods = self::field('id,mate_name,image,content,market_price,sales_price,store_id')
+        $foodmate = self::field('id,mate_name,image,content,market_price,sales_price,store_id')
             ->with(['storeInfo'])
             ->find($id);
-        return $foods;
+        return $foodmate;
     }
 }

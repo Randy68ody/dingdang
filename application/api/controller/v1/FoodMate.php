@@ -42,8 +42,16 @@ class FoodMate{
     /* 食材详情 2020.7.13 */
     public function getFoodMateDetail($id){
         (new IdMbpi())->goCheck();
-        $food = FoodMaterials::getFoodMateDetail($id);
-        if(!$food) throw new FoodException();
-        return $food;
+        $foodmate = FoodMaterials::getFoodMateDetail($id);
+        if(!$foodmate) throw new FoodException();
+        return $foodmate;
+    }
+
+    /* 加入/取消收藏 2020.7.13 */
+    public function collect($id){
+        (new IdMbpi())->goCheck();
+        $foodmate = FoodMaterials::collectYesOrNo($id);
+//        if(!$foodmate) throw new FoodException();
+        return $foodmate;
     }
 }

@@ -38,7 +38,7 @@ class Food{
         }else{
             $mate_id = FoodMaterials::getMateByName($search_data['name']);
             if(!$mate_id) throw new SearchFoodException();
-            else $foods = FoodModel::getFoodByMateID($mate_id);
+            $foods = FoodModel::getFoodByMateID($mate_id);
         }
         return $foods;
 
