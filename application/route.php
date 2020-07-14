@@ -12,7 +12,7 @@ use think\Route;
 /* 摇一摇 */
 Route::get('api/:version/access_to_food','api/:version.Food/accessToFood');//获取食物
 Route::get('api/:version/food_detail/:id','api/:version.Food/foodDetail');//食物详情
-
+Route::post('api/:version/collect','api/:version.Food/collect');// 加入/取消 收藏
 /* 分类 */
 Route::get('api/:version/all_food_category','api/:version.Category/getAllFoodCate');
 Route::post('api/:version/search','api/:version.Food/searchFood');

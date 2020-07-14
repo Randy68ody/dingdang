@@ -2,7 +2,6 @@
 namespace app\api\controller\v1;
 
 use app\api\model\Category as CategoryModel;
-use app\api\model\Food as FoodModel;
 use app\api\model\FoodMaterials;
 use app\api\validate\IdMbpi;
 use app\api\validate\PageIdMbpi;
@@ -47,11 +46,5 @@ class FoodMate{
         return $foodmate;
     }
 
-    /* 加入/取消收藏 2020.7.13 */
-    public function collect($id){
-        (new IdMbpi())->goCheck();
-        $foodmate = FoodMaterials::collectYesOrNo($id);
-//        if(!$foodmate) throw new FoodException();
-        return $foodmate;
-    }
+
 }

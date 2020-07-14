@@ -4,10 +4,14 @@ namespace app\api\controller\v1;
 use app\api\model\Food as FoodModel;
 use app\api\model\Category as CategoryModel;
 use app\api\model\FoodMaterials;
+use app\api\model\User as UserModel;
+use app\api\validate\CollectFood;
 use app\api\validate\IdMbpi;
 use app\api\validate\SearchFood;
 use app\lib\exception\FoodException;
 use app\lib\exception\SearchFoodException;
+use app\lib\exception\SuccessMessage;
+use app\lib\exception\UserException;
 
 class Food{
 
@@ -42,5 +46,26 @@ class Food{
         }
         return $foods;
 
+    }
+
+
+    /* 食品加入/取消收藏 2020.7.13 */
+    public function collect(){
+        $validate = new CollectFood();
+        $validate->goCheck();
+        //根据Token获取用户数据
+        $uid = 1; //Token::getCurrentUid();
+        $user = UserModel::get($uid);
+        if(!$user){
+            throw new UserException();
+        }
+        $dataArray = $validate->getDataByRule(input('post.'));
+        $userCollect = $user->collect();
+        if(!$userCollect){
+            $user->collect()->save($dataArray);
+        }else{
+            $user->collect()->save($dataArray);
+        }
+        return json(new SuccessMessage(),201);
     }
 }

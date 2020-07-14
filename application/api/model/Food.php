@@ -42,4 +42,5 @@ class Food extends BaseModel {
     {
         return $this->hasMany('CookStep','food_id','id');
     }
+
 }
