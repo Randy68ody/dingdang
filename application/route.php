@@ -22,21 +22,13 @@ Route::post('api/:version/get_all_mates','api/:version.FoodMate/getFoodMate');
 Route::post('api/:version/get_mates_by_CID','api/:version.Category/getMateByCateID');
 Route::get('api/:version/get_FM_detail/:id','api/:version.FoodMate/getFoodMateDetail'); //食材详情
 
-/* ------------------------------------------------------------------- */
-Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');
-
-Route::get('api/:version/theme','api/:version.Theme/getSimpleList');
-Route::get('api/:version/theme/:id','api/:version.Theme/getComplexOne');
-
-Route::group('api/:version/product',function (){
-    Route::get('/by_category','api/:version.Product/getAllInCategory');
-    Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);
-    Route::get('/recent','api/:version.Product/getRecent');
-
-});
-
-Route::get('api/:version/category/all','api/:version.Category/getAllCategories');
-
+/* 用户 */
 Route::post('api/:version/token/user','api/:version.Token/getToken');
 
-Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');
+
+//Route::group('api/:version/product',function (){
+//    Route::get('/by_category','api/:version.Product/getAllInCategory');
+//    Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);
+//    Route::get('/recent','api/:version.Product/getRecent');
+//
+//});

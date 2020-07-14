@@ -45,4 +45,8 @@ class FoodMaterials extends BaseModel {
             ->find($id);
         return $foodmate;
     }
+
+    public static function collectYesOrNo($id){
+
+    }
 }
