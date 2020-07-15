@@ -1,11 +1,13 @@
 <?php
 namespace app\api\controller\v1;
 
-use app\api\model\FoodCollect;
+use app\api\model\FoodMaterials;
 use app\api\model\User as UserModel;
 use app\api\validate\CartNew;
+use app\lib\exception\FoodException;
 use app\lib\exception\SuccessMessage;
 use app\lib\exception\UserException;
+use app\api\model\Cart as CartModel;
 
 class Cart{
     /* 将商品加入购物车 2020.7.15 */
@@ -17,18 +19,33 @@ class Cart{
         if(!$user){
             throw new UserException();
         }
-        $dataArray = $validate->getDataByRule(input('post.'));
-//        $where = [
-//            'food_id' => $dataArray['food_id'],
-//            'uid' => $uid
-//        ];
-//        $userCollect = (new FoodCollect())->where($where)->find();
-//        if(!$userCollect){
-//            $dataArray['uid'] = $uid;
-//            (new FoodCollect())->save($dataArray);
-//        }else{
-//            (new FoodCollect())->where($where)->delete();
-//        }
+        $post_data = $validate->getDataByRule(input('post.'));
+
+        $food_mate = FoodMaterials::getFoodMateDetail($post_data['food_id']);
+        if(!$food_mate) throw new FoodException();
+        else{
+            $post_data['uid'] = $uid;
+            $post_data['title'] = $food_mate['mate_name'];
+            $post_data['sales_price'] = $food_mate['sales_price'];
+            $post_data['market_price'] = $food_mate['market_price'];
+            $post_data['total_price'] = $post_data['num'] * $food_mate['sales_price'];
+            $res = CartModel::getCartFood($post_data['food_id'],$uid);
+            if($res){
+                $post_data['num'] = intval($post_data['num']) + intval($res['num']);
+                $post_data['total_price'] = $post_data['num'] * $food_mate['sales_price'];
+                (new CartModel())
+                    ->where('food_id',$post_data['food_id'])
+                    ->where('uid',$uid)
+                    ->update($post_data);
+            }else{
+                (new CartModel())->save($post_data);
+            }
+        }
         return json(new SuccessMessage(),201);
+    }
+
+    /* 购物车列表 2020.7.15 */
+    public function myCartList(){
+
     }
 }
