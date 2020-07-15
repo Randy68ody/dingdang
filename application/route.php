@@ -18,7 +18,8 @@ Route::get('api/:version/all_food_category','api/:version.Category/getAllFoodCat
 Route::post('api/:version/search','api/:version.Food/searchFood');
 
 /* 食材 */
-Route::post('api/:version/get_all_mates','api/:version.FoodMate/getFoodMate');
+Route::post('api/:version/get_all_mates_index','api/:version.FoodMate/getFoodMateIndex'); //获取食材首页分类和推荐
+Route::post('api/:version/get_foodmates','api/:version.FoodMate/getFoodMates'); //获取食材首页全部商品
 Route::post('api/:version/get_mates_by_CID','api/:version.Category/getMateByCateID');
 Route::get('api/:version/get_FM_detail/:id','api/:version.FoodMate/getFoodMateDetail'); //食材详情
 
