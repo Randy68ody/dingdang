@@ -37,7 +37,6 @@ class FoodMate{
     /* 食材每日推荐 2020.7.10 */
     public function dailySpecial(){
         $recom = FoodMaterials::getmates(self::DAILYSPECIAL_LIMIT);
-
         return $recom;
     }
 
