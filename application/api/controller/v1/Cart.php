@@ -6,6 +6,7 @@ use app\api\model\User as UserModel;
 use app\api\validate\CartNew;
 use app\lib\exception\FoodException;
 use app\lib\exception\SuccessMessage;
+use app\lib\exception\UserCartException;
 use app\lib\exception\UserException;
 use app\api\model\Cart as CartModel;
 
@@ -46,6 +47,13 @@ class Cart{
 
     /* 购物车列表 2020.7.15 */
     public function myCartList(){
-
+        $uid = 1; //Token::getCurrentUid();
+        $user = UserModel::get($uid);
+        if(!$user){
+            throw new UserException();
+        }
+        $cart_mates = CartModel::getMyCartList($uid);
+        if(!$cart_mates) throw new UserCartException();
+        return $cart_mates;
     }
 }
