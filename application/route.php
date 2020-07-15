@@ -24,8 +24,8 @@ Route::get('api/:version/get_FM_detail/:id','api/:version.FoodMate/getFoodMateDe
 
 /* 用户 */
 Route::post('api/:version/token/user','api/:version.Token/getToken');
-
-
+Route::get('api/:version/my_collect','api/:version.Food/myCollect'); // 我的收藏
+Route::post('api/:version/del_collect/:id','api/:version.Food/delMyCollect'); // 我的收藏
 //Route::group('api/:version/product',function (){
 //    Route::get('/by_category','api/:version.Product/getAllInCategory');
 //    Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);
