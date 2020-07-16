@@ -24,7 +24,7 @@ Route::post('api/:version/get_mates_by_CID','api/:version.Category/getMateByCate
 Route::get('api/:version/get_FM_detail/:id','api/:version.FoodMate/getFoodMateDetail'); //食材详情
 
 /* 用户 */
-Route::post('api/:version/token/user','api/:version.Token/getToken');
+Route::get('api/:version/token/user','api/:version.Token/getToken');
 Route::get('api/:version/my_collect','api/:version.Food/myCollect'); // 我的收藏
 Route::post('api/:version/del_collect/:id','api/:version.Food/delMyCollect'); // 我的收藏
 
