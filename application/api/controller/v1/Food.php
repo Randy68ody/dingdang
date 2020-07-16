@@ -14,6 +14,7 @@ use app\lib\exception\OperationFailureException;
 use app\lib\exception\SearchFoodException;
 use app\lib\exception\SuccessMessage;
 use app\lib\exception\UserException;
+use app\api\service\Token;
 
 class Food{
 
@@ -56,7 +57,7 @@ class Food{
         $validate = new CollectFood();
         $validate->goCheck();
         //根据Token获取用户数据
-        $uid = 1; //Token::getCurrentUid();
+        $uid = Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();

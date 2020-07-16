@@ -14,4 +14,5 @@ class Token{
             'token' => $token
         ];
     }
+
 }
