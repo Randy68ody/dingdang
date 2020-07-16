@@ -30,7 +30,7 @@ class UserToken extends Token {
             if($loginFail){
                 $this->processLoginError($wxRes);
             }else{
-                return $this->grantToken($wxRes);
+                return $this->grantToken(json_decode($wxRes,true));
             }
         }
     }
@@ -39,7 +39,6 @@ class UserToken extends Token {
         // 获取openid
         // 查看openid是否已经存在
         // 生成令牌,缓存数据,返回客户端
-        var_dump($wxRes);exit;
         $openid = $wxRes['openid'];
         $user = UserModel::getByOpenID($openid);
         if($user){
