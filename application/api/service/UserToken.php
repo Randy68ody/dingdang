@@ -22,15 +22,15 @@ class UserToken extends Token {
 
     public function get(){
         $result = curl_get($this->wxLoginUrl);
-        $wxRes = json_encode($result,true);
+        $wxRes = json_decode($result,true);
         if(empty($wxRes)){
             throw new Exception('微信内部错误，获取session_key和openID时异常');
         }else{
-            $loginFail = @array_key_exists('errcode',$wxRes);
+            $loginFail = array_key_exists('errcode',$wxRes);
             if($loginFail){
                 $this->processLoginError($wxRes);
             }else{
-                return $this->grantToken(json_decode($wxRes,true));
+                return $this->grantToken($wxRes);
             }
         }
     }
@@ -39,7 +39,6 @@ class UserToken extends Token {
         // 获取openid
         // 查看openid是否已经存在
         // 生成令牌,缓存数据,返回客户端
-        var_dump($wxRes);exit;
         $openid = $wxRes['openid'];
         $user = UserModel::getByOpenID($openid);
         if($user){
