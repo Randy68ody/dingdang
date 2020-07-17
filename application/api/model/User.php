@@ -3,6 +3,8 @@ namespace app\api\model;
 
 class User extends BaseModel{
 
+    protected $autoWriteTimestamp = true;
+
     public static function getByOpenID($openid){
         $user = self::where('openid',$openid)->find();
         return $user;
