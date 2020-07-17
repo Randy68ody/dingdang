@@ -23,4 +23,10 @@ class Cart extends BaseModel {
             ->toArray();
         return $cart_mates;
     }
+
+    public static function delCartPro($ids = ''){
+        $res = self::whereIn('id',$ids)
+            ->delete();
+        return $res;
+    }
 }

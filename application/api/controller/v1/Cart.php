@@ -4,7 +4,9 @@ namespace app\api\controller\v1;
 use app\api\model\FoodMaterials;
 use app\api\model\MateStore;
 use app\api\model\User as UserModel;
+use app\api\validate\CartDel;
 use app\api\validate\CartNew;
+use app\lib\exception\ErrorException;
 use app\lib\exception\FoodException;
 use app\lib\exception\SuccessMessage;
 use app\lib\exception\UserCartException;
@@ -71,5 +73,20 @@ class Cart{
         }
         if(!$stores_data) throw new UserCartException();
         return $stores_data;
+    }
+
+    /* 删除购物车商品(单删、多删) 2020.7.17 */
+    public function delCart(){
+        $validate = new CartDel();
+        $validate->goCheck();
+        $uid = Token::getCurrentUid();
+        $user = UserModel::get($uid);
+        if(!$user){
+            throw new UserException();
+        }
+        $post_data = $validate->getDataByRule(input('post.'));
+        $res = CartModel::delCartPro($post_data['ids']);
+        if($res) return json(new SuccessMessage(),201);
+        else return json(new ErrorException(),500);
     }
 }

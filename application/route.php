@@ -30,7 +30,8 @@ Route::post('api/:version/del_collect/:id','api/:version.Food/delMyCollect'); //
 
 /* 购物车 */
 Route::post('api/:version/add_cart','api/:version.Cart/addOrUpdCart'); // 加入或修改购物车商品
-Route::post('api/:version/my_cart','api/:version.Cart/myCartList');
+Route::post('api/:version/my_cart','api/:version.Cart/myCartList'); // 我的购物车列表
+Route::post('api/:version/del_cart','api/:version.Cart/delCart'); //删除购物车商品
 //Route::group('api/:version/product',function (){
 //    Route::get('/by_category','api/:version.Product/getAllInCategory');
 //    Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);
