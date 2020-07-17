@@ -10,19 +10,19 @@ use app\lib\exception\SuccessMessage;
 use app\lib\exception\UserCartException;
 use app\lib\exception\UserException;
 use app\api\model\Cart as CartModel;
+use app\api\service\Token;
 
 class Cart{
     /* 将商品加入购物车 2020.7.15 */
     public function addOrUpdCart(){
         $validate = new CartNew();
         $validate->goCheck();
-        $uid = 1; //Token::getCurrentUid();
+        $uid = Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
         }
         $post_data = $validate->getDataByRule(input('post.'));
-
         $food_mate = FoodMaterials::getFoodMateDetail($post_data['food_id']);
         if(!$food_mate) throw new FoodException();
         else{
@@ -48,7 +48,7 @@ class Cart{
 
     /* 购物车列表 2020.7.15 */
     public function myCartList(){
-        $uid = 1; //Token::getCurrentUid();
+        $uid = Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
