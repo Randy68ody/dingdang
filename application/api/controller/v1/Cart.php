@@ -2,6 +2,7 @@
 namespace app\api\controller\v1;
 
 use app\api\model\FoodMaterials;
+use app\api\model\MateStore;
 use app\api\model\User as UserModel;
 use app\api\validate\CartNew;
 use app\lib\exception\FoodException;
@@ -53,7 +54,22 @@ class Cart{
             throw new UserException();
         }
         $cart_mates = CartModel::getMyCartList($uid);
-        if(!$cart_mates) throw new UserCartException();
-        return $cart_mates;
+        //获取店铺信息
+        $stores = array();
+        foreach ($cart_mates as $k => $v){
+            array_push($stores , $v['store_id']);
+        }
+        $stores = array_unique($stores);
+        $stores_str = implode(',', $stores);
+        $stores_data = MateStore::getStores($stores_str);
+        foreach ($stores_data as $k => $v) {
+            foreach ($cart_mates as $key => $val){
+                if($val['store_id'] == $v['id']){
+                    $stores_data[$k]['product'][] = $val;
+                }
+            }
+        }
+        if(!$stores_data) throw new UserCartException();
+        return $stores_data;
     }
 }

@@ -16,10 +16,11 @@ class Cart extends BaseModel {
     public static function getMyCartList($uid){
         $cart_mates = self::alias('c')
             ->join('food_materials fm','fm.id=c.food_id')
-            ->field('c.id,c.title,fm.image,c.sales_price,c.market_price,c.total_price')
+            ->field('c.id,c.title,fm.image,c.sales_price,c.market_price,c.total_price,fm.store_id')
             ->where('uid',$uid)
             ->order('create_time','desc')
-            ->select();
+            ->select()
+            ->toArray();
         return $cart_mates;
     }
 }
