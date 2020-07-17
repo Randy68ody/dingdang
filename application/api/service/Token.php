@@ -19,6 +19,9 @@ class Token{
         $token = Request::instance()
             ->header('token');
         $vars = Cache::get($token);
+        var_dump($token);
+        echo('____');
+        var_dump($vars);die;
         if(!$vars){
             throw new TokenException();
         }else{
