@@ -14,6 +14,14 @@ class User extends BaseModel{
         return $this->hasMany('FoodCollect','uid','id');
     }
 
+    public function address(){
+        return $this->hasMany('UserAddress','uid','id');
+    }
+
+    public function store(){
+        return $this->hasOne('MateStore','uid','id');
+    }
+
 //    public function address(){
 //        return $this->hasMany('UserAddress','user_id','id');
 //    }
