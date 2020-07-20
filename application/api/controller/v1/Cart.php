@@ -19,7 +19,7 @@ class Cart{
     public function addOrUpdCart(){
         $validate = new CartNew();
         $validate->goCheck();
-        $uid = 1;//Token::getCurrentUid();
+        $uid = Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
