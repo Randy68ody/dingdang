@@ -112,14 +112,16 @@ class Food{
 
     /* 删除我的收藏里的商品 2020.7.15 */
     public function delMyCollect($id){
-        var_dump($id);die;
+
         (new IdMbpi())->goCheck();
         $uid = Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
         }
-        $res = FoodCollect::delMC($id);
+        var_dump($uid);
+        var_dump($id);die;
+        $res = FoodCollect::delMC($id,$uid);
         if($res) return json(new SuccessMessage(),201);
         else throw new OperationFailureException();
     }
