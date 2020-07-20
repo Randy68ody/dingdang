@@ -44,13 +44,8 @@ class Cart{
             }else{
                 (new CartModel())->save($post_data);
             }
-            /* 统计购物车商品数量 2020.7.20 */
-            $data['number'] = CartModel::getUserCartNum($uid);
         }
-        $data['code'] = 201;
-        $data['msg'] = 'ok';
-        $data['errorCode'] = 0;
-        return $data;
+        return json(new SuccessMessage(),201);
     }
 
     /* 购物车列表 2020.7.15 */
