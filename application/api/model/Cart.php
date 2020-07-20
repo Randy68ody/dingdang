@@ -29,4 +29,16 @@ class Cart extends BaseModel {
             ->delete();
         return $res;
     }
+
+    public static function getUserCartNum($uid){
+        $number_data = self::where('uid',$uid)
+            ->field('num')
+            ->select()
+            ->toArray();
+        $number = 0;
+        foreach ($number_data as $k=>$v) {
+            $number += $v['num'];
+        }
+        return $number;
+    }
 }

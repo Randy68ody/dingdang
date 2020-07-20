@@ -19,7 +19,7 @@ class Cart{
     public function addOrUpdCart(){
         $validate = new CartNew();
         $validate->goCheck();
-        $uid = Token::getCurrentUid();
+        $uid = 1;//Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
@@ -44,8 +44,13 @@ class Cart{
             }else{
                 (new CartModel())->save($post_data);
             }
+            /* 统计购物车商品数量 2020.7.20 */
+            $data['number'] = CartModel::getUserCartNum($uid);
         }
-        return json(new SuccessMessage(),201);
+        $data['code'] = 201;
+        $data['msg'] = 'ok';
+        $data['errorCode'] = 0;
+        return $data;
     }
 
     /* 购物车列表 2020.7.15 */
