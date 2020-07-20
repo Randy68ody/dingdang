@@ -112,6 +112,7 @@ class Food{
 
     /* 删除我的收藏里的商品 2020.7.15 */
     public function delMyCollect($id){
+        var_dump($id);die;
         (new IdMbpi())->goCheck();
         $uid = Token::getCurrentUid();
         $user = UserModel::get($uid);
