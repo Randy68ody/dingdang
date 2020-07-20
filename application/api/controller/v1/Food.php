@@ -119,9 +119,8 @@ class Food{
         if(!$user){
             throw new UserException();
         }
-        var_dump($uid);
-        var_dump($id);die;
         $res = FoodCollect::delMC($id,$uid);
+        var_dump($res);die;
         if($res) return json(new SuccessMessage(),201);
         else throw new OperationFailureException();
     }
