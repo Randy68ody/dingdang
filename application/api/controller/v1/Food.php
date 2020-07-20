@@ -92,10 +92,15 @@ class Food{
         if(!$userCollect){
             $dataArray['uid'] = $uid;
             (new FoodCollect())->save($dataArray);
+            $data['is_collect'] = 1;
         }else{
             (new FoodCollect())->where($where)->delete();
+            $data['is_collect'] = 0;
         }
-        return json(new SuccessMessage(),201);
+        $data['code'] = 201;
+        $data['msg'] = 'ok';
+        $data['errorCode'] = 0;
+        return $data;
     }
 
     /* 我的收藏 2020.7.15 */
