@@ -18,4 +18,9 @@ class FoodCollect extends BaseModel {
         $res = FoodCollect::where('id',$id)->delete();
         return $res;
     }
+
+    public static function findUserCollect($where = []){
+        $food = self::where($where)->find();
+        return $food;
+    }
 }

@@ -26,8 +26,29 @@ class Food{
 
     public function foodDetail($id){
         (new IdMbpi())->goCheck();
+
         $food = FoodModel::getFoodDetail($id);
-        if(!$food) throw new FoodException();
+        if(!$food){
+            throw new FoodException();
+        }else{
+            $uid = 1;//Token::getCurrentUid();
+            $user = UserModel::get($uid);
+            if(!$user){
+                throw new UserException();
+            }else{
+                //查询用户是否收藏此食品
+                $where = [
+                    'food_id' => $id,
+                    'uid' => $uid
+                ];
+                $userCollect = FoodCollect::findUserCollect($where);
+                if($userCollect){
+                    $food['is_collect'] = 1;
+                }else{
+                    $food['is_collect'] = 0;
+                }
+            }
+        }
         return $food;
     }
 
@@ -67,7 +88,7 @@ class Food{
             'food_id' => $dataArray['food_id'],
             'uid' => $uid
         ];
-        $userCollect = (new FoodCollect())->where($where)->find();
+        $userCollect = FoodCollect::findUserCollect($where);
         if(!$userCollect){
             $dataArray['uid'] = $uid;
             (new FoodCollect())->save($dataArray);
