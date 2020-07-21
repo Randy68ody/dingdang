@@ -14,12 +14,13 @@ class MateStore{
         $validate = new AddressNew();
         $validate->goCheck();
         //根据Token获取用户数据
-        $uid = Token::getCurrentUid();
+        $uid = 1;//Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
         }
-        $dataArray = $validate->getDataByRule(input('.post'));
+        $dataArray = $validate->getDataByRule(input('post.'));
+
         $userAddress = $user->address();
         $userStore = $user->store();
         $store_data['store_name'] = $dataArray['name'];
