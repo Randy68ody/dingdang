@@ -8,6 +8,7 @@ use app\api\model\UserAddress;
 use app\api\validate\CartDel;
 use app\api\validate\CartNew;
 use app\api\validate\IDCollection;
+use app\api\validate\IsSelected;
 use app\lib\exception\AddressException;
 use app\lib\exception\ErrorException;
 use app\lib\exception\FoodException;
@@ -97,7 +98,7 @@ class Cart{
     public function settleAccounts(){
         $validate = new IDCollection();
         $validate->goCheck();
-        $uid = 1;//Token::getCurrentUid();
+        $uid = Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
@@ -144,5 +145,18 @@ class Cart{
     }
 
     /* 购物车商品维持选中状态 2020.7.21*/
-
+    public function isSelected(){
+        $validate = new IsSelected();
+        $validate->goCheck();
+        $uid = Token::getCurrentUid();
+        $user = UserModel::get($uid);
+        if(!$user){
+            throw new UserException();
+        }
+        $post_data = $validate->getDataByRule(input('post.'));
+        $res = CartModel::where('uid',$uid)
+            ->where('id',$post_data['id'])
+            ->update(['is_selected'=>$post_data['select']]);
+        return json(new SuccessMessage(),201);
+    }
 }
