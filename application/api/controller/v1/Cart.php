@@ -54,7 +54,7 @@ class Cart{
 
     /* 购物车列表 2020.7.15 */
     public function myCartList(){
-        $uid = Token::getCurrentUid();
+        $uid = 1;//Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();

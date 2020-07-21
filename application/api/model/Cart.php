@@ -15,7 +15,7 @@ class Cart extends BaseModel {
     public static function getCartFoods($ids,$uid){
         $cart_mates = self::alias('c')
             ->join('food_materials fm','fm.id=c.food_id')
-            ->field('c.id,c.food_id,c.title,fm.image,c.sales_price,c.market_price,c.total_price,fm.store_id,c.num,c.is_selected')
+            ->field('c.id,c.food_id,c.title,fm.image,c.sales_price,c.market_price,c.total_price,fm.store_id,c.num')
             ->where('c.uid',$uid)
             ->whereIn('c.id',$ids)
             ->order('c.create_time','desc')
@@ -27,7 +27,7 @@ class Cart extends BaseModel {
     public static function getMyCartList($uid){
         $cart_mates = self::alias('c')
             ->join('food_materials fm','fm.id=c.food_id')
-            ->field('c.id,c.food_id,c.title,fm.image,c.sales_price,c.market_price,c.total_price,fm.store_id,c.num')
+            ->field('c.id,c.food_id,c.title,fm.image,c.sales_price,c.market_price,c.total_price,fm.store_id,c.num,c.is_selected')
             ->where('c.uid',$uid)
             ->order('create_time','desc')
             ->select()
