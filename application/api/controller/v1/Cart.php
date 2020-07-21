@@ -6,6 +6,7 @@ use app\api\model\MateStore;
 use app\api\model\User as UserModel;
 use app\api\validate\CartDel;
 use app\api\validate\CartNew;
+use app\api\validate\IDCollection;
 use app\lib\exception\ErrorException;
 use app\lib\exception\FoodException;
 use app\lib\exception\SuccessMessage;
@@ -88,5 +89,17 @@ class Cart{
         $res = CartModel::delCartPro($post_data['ids']);
         if($res) return json(new SuccessMessage(),201);
         else return json(new ErrorException(),500);
+    }
+
+    /* 去结算 2020.7.21*/
+    public function settleAccounts(){
+        $validate = new IDCollection();
+        $validate->goCheck();
+        $uid = Token::getCurrentUid();
+        $user = UserModel::get($uid);
+        if(!$user){
+            throw new UserException();
+        }
+
     }
 }
