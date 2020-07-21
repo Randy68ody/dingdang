@@ -14,25 +14,23 @@ class MateStore{
         $validate = new AddressNew();
         $validate->goCheck();
         //根据Token获取用户数据
-        $uid = 1;//Token::getCurrentUid();
+        $uid = Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
         }
         $dataArray = $validate->getDataByRule(input('post.'));
-
         $userAddress = $user->address();
-        $userStore = $user->store();
+        $userStore = $user->mateStore();
         $store_data['store_name'] = $dataArray['name'];
         if(!$userAddress){
             $user->address()->save($dataArray);
-            $user->store()->save($store_data);
+            $user->mateStore()->save($store_data);
         }else{
             $user->address()->save($dataArray);
-            $user->store()->save($store_data);
+            $user->mateStore()->save($store_data);
+            $user->where('id',$uid)->update(['is_shop'=>1]);
         }
         return json(new SuccessMessage(),201);
-
-
     }
 }

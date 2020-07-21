@@ -18,7 +18,7 @@ class User extends BaseModel{
         return $this->hasMany('UserAddress','uid','id');
     }
 
-    public function store(){
+    public function mateStore(){
         return $this->hasOne('MateStore','uid','id');
     }
 

@@ -11,7 +11,8 @@ class Token{
         $ut = new UserToken($code);
         $token = $ut->get();
         return [
-            'token' => $token
+            'token' => $token,
+            'is_shop' => 0
         ];
     }
 
