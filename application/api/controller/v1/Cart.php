@@ -4,9 +4,11 @@ namespace app\api\controller\v1;
 use app\api\model\FoodMaterials;
 use app\api\model\MateStore;
 use app\api\model\User as UserModel;
+use app\api\model\UserAddress;
 use app\api\validate\CartDel;
 use app\api\validate\CartNew;
 use app\api\validate\IDCollection;
+use app\lib\exception\AddressException;
 use app\lib\exception\ErrorException;
 use app\lib\exception\FoodException;
 use app\lib\exception\SuccessMessage;
@@ -95,11 +97,52 @@ class Cart{
     public function settleAccounts(){
         $validate = new IDCollection();
         $validate->goCheck();
-        $uid = Token::getCurrentUid();
+        $uid = 1;//Token::getCurrentUid();
         $user = UserModel::get($uid);
         if(!$user){
             throw new UserException();
         }
+        $post_data = $validate->getDataByRule(input('post.'));
 
+        // 查看用户是否有收货地址
+        $userAddress = UserAddress::getUserAddress($uid);
+        if(!$userAddress){
+            throw new AddressException();
+        }
+        $cart_mates = CartModel::getCartFoods($post_data['ids'],$uid);
+        $stores = array();
+        foreach ($cart_mates as $k => $v){
+            array_push($stores , $v['store_id']);
+        }
+        $stores = array_unique($stores);
+        $stores_str = implode(',', $stores);
+        $stores_data = MateStore::getStores($stores_str);
+        $product_total_price = 0;
+        foreach ($stores_data as $k => $v) {
+            foreach ($cart_mates as $key => $val){
+                if($val['store_id'] == $v['id']){
+                    $stores_data[$k]['product'][] = $val;
+                }
+                //商品总价
+                $product_total_price += $val['num'] * $val['sales_price'];
+            }
+        }
+        if(!$stores_data) throw new UserCartException();
+        // 运费
+        $freight = 0.00;
+        return $return_data = [
+            'address' => [
+                'name' => $userAddress['name'],
+                'mobile' => $userAddress['mobile'],
+                'address' => $userAddress['province'].$userAddress['city'].$userAddress['country'].$userAddress['detail'],
+            ],
+            'product' => $stores_data,
+            'product_total_price' => $product_total_price,
+            'freight' => $freight,
+            'order_total_price' => floatval($product_total_price)+floatval($freight)
+        ];
     }
+
+    /* 购物车商品维持选中状态 2020.7.21*/
+
 }

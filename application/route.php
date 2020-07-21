@@ -33,6 +33,7 @@ Route::post('api/:version/is_shop','api/:version.User/isShop'); //是否为商�
 Route::post('api/:version/add_cart','api/:version.Cart/addOrUpdCart'); // 加入或修改购物车商品
 Route::post('api/:version/my_cart','api/:version.Cart/myCartList'); // 我的购物车列表
 Route::post('api/:version/del_cart','api/:version.Cart/delCart'); //删除购物车商品
+Route::post('api/:version/s_a','api/:version.Cart/settleAccounts'); //去结算
 
 /* 地址管理，店铺入驻 */
 Route::post('api/:version/shop_in','api/:version.MateStore/shopsIn'); //店铺入驻
