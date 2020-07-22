@@ -38,7 +38,9 @@ Route::post('api/:version/is_selected','api/:version.Cart/isSelected'); //购物
 
 /* 地址管理，店铺入驻 */
 Route::post('api/:version/shop_in','api/:version.MateStore/shopsIn'); //店铺入驻
-Route::post('api/:version/my_address','api/:version.User/getMyAddress'); //店铺入驻
+Route::post('api/:version/my_address','api/:version.User/getMyAddress'); //获取我的地址
+Route::post('api/:version/upd_default/:id','api/:version.User/updDefault'); //更新我的默认地址
+
 //Route::group('api/:version/product',function (){
 //    Route::get('/by_category','api/:version.Product/getAllInCategory');
 //    Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);
