@@ -155,7 +155,7 @@ class Cart{
         }
         $post_data = $validate->getDataByRule(input('post.'));
         CartModel::where('uid',$uid)
-            ->where('id',$post_data['id'])
+            ->whereIn('id',$post_data['id'])
             ->update(['is_selected'=>$post_data['select']]);
         return json(new SuccessMessage(),201);
     }
