@@ -4,8 +4,10 @@ namespace app\api\controller\v1;
 use app\api\model\User as UserModel;
 use app\api\service\Token;
 use app\api\validate\AddressNew;
+use app\api\validate\IdMbpi;
 use app\lib\exception\SuccessMessage;
 use app\lib\exception\UserException;
+use app\api\model\MateStore as MateStoreModel;
 
 class MateStore{
 
@@ -23,6 +25,7 @@ class MateStore{
         $userAddress = $user->address();
         $userStore = $user->mateStore();
         $store_data['store_name'] = $dataArray['name'];
+        $store_data['mobile'] = $dataArray['mobile'];
         if(!$userAddress){
             $user->address()->save($dataArray);
             $user->mateStore()->save($store_data);
@@ -32,5 +35,17 @@ class MateStore{
             $user->where('id',$uid)->update(['is_shop'=>1]);
         }
         return json(new SuccessMessage(),201);
+    }
+    /* 获取商户下商品 2017.7.28 */
+    public function storeFoodMates($id){
+        (new IdMbpi())->goCheck();
+        $store_info = MateStoreModel::getStores($id);
+        if(!$store_info) throw new UserException();
+        $store_fm = MateStoreModel::getStoreFoodMates($id);
+        if(!$store_fm) $store_fm=[];
+        return $store = [
+            'store_info' => $store_info,
+            'store_fm'=> $store_fm
+        ];
     }
 }

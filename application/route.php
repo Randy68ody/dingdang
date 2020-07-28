@@ -28,6 +28,7 @@ Route::get('api/:version/token/user','api/:version.Token/getToken'); //用户登
 Route::get('api/:version/my_collect','api/:version.Food/myCollect'); // 我的收藏
 Route::post('api/:version/del_collect/:id','api/:version.Food/delMyCollect'); // 删除我的收藏
 Route::post('api/:version/is_shop','api/:version.User/isShop'); //是否为商户
+Route::get('api/:version/store_fm/:id','api/:version.MateStore/storeFoodMates'); //获取商户食材
 
 /* 购物车 */
 Route::post('api/:version/add_cart','api/:version.Cart/addOrUpdCart'); // 加入或修改购物车商品
@@ -41,9 +42,3 @@ Route::post('api/:version/shop_in','api/:version.MateStore/shopsIn'); //店铺�
 Route::post('api/:version/my_address','api/:version.User/getMyAddress'); //获取我的地址
 Route::post('api/:version/upd_default/:id','api/:version.User/updDefault'); //更新我的默认地址
 
-//Route::group('api/:version/product',function (){
-//    Route::get('/by_category','api/:version.Product/getAllInCategory');
-//    Route::get('/:id','api/:version.Product/getOne',[],['id'=>'\d+']);
-//    Route::get('/recent','api/:version.Product/getRecent');
-//
-//});

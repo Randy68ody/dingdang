@@ -3,6 +3,8 @@ namespace app\api\model;
 
 class FoodMaterials extends BaseModel {
 
+    protected $autoWriteTimestamp = true;
+
     public static function getMateByName($name = ''){
         $mate_id = self::where('mate_name',$name)
             ->value('id');
