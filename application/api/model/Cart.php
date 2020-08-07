@@ -29,7 +29,7 @@ class Cart extends BaseModel {
             ->join('food_materials fm','fm.id=c.food_id')
             ->field('c.id,c.food_id,c.title,fm.image,c.sales_price,c.market_price,c.total_price,fm.store_id,c.num,fm.stock,c.is_selected')
             ->where('c.uid',$uid)
-            ->order('create_time','desc')
+            ->order('c.create_time','desc')
             ->select()
             ->toArray();
         return $cart_mates;
